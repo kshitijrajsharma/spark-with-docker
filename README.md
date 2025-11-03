@@ -26,10 +26,10 @@ make up
 ```
 
 - UIs:
-
-- Spark Master: http://localhost:8080
-- Spark History: http://localhost:18080
-- Jupyter: http://localhost:8889 (token: `spark`)
+  
+  - Spark Master: http://localhost:8080
+  - Spark History: http://localhost:18080
+  - Jupyter: http://localhost:8889 (token: `spark`)
 
 **Enjoy** your ride with spark ! 
 
