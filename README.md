@@ -1,6 +1,7 @@
 ## Spark + Jupyter Docker Compose
 
 Apache Spark docker setup with JupyterLab
+<img width="865" height="484" alt="image" src="https://github.com/user-attachments/assets/eb58fb6d-cee5-4241-adc0-1c72990f240a" />
 
 ### Prerequisites
 
