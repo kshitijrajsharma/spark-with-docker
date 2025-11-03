@@ -11,16 +11,27 @@ Apache Spark docker setup with JupyterLab
 
 ### Quick start
 
+- Clone : 
+
+```bash
+git clone https://github.com/kshitijrajsharma/spark-with-docker.git
+cd spark-with-docker
+```
+
+- Install and Run : 
+
 ```bash
 make init
 make up
 ```
 
-UIs:
+- UIs:
 
 - Spark Master: http://localhost:8080
 - Spark History: http://localhost:18080
 - Jupyter: http://localhost:8889 (token: `spark`)
+
+**Enjoy** your ride with spark ! 
 
 ### Testing
 
