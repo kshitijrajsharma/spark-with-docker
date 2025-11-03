@@ -5,6 +5,9 @@ Apache Spark docker setup with JupyterLab
 ### Prerequisites
 
 - Docker and Docker Compose
+  ```bash
+  brew install docker docker-compose
+  ```
 
 ### Quick start
 
