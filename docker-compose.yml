@@ -3,7 +3,7 @@ x-spark-volumes: &spark-volumes
   - ${DATA_PATH:-./data}:/opt/spark/work-dir/data
   - ${LOGS_PATH:-./spark-logs}:/opt/spark/spark-events
   - ${WAREHOUSE_PATH:-./warehouse}:/opt/spark/work-dir/warehouse
-
+  - ~/.aws:/root/.aws
 services:
   spark-master:
     image: apache/spark:3.5.7-python3
@@ -52,6 +52,8 @@ services:
       - ${NOTEBOOKS_PATH:-./notebooks}:/home/jovyan/notebooks
       - ${SCRIPTS_PATH:-./scripts}:/opt/spark/work-dir/scripts
       - ${DATA_PATH:-./data}:/opt/spark/work-dir/data
+      - ~/.aws:/home/jovyan/.aws
+
     ports:
       - '${JUPYTER_PORT:-8889}:8888'
 
