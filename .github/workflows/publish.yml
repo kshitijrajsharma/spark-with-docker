@@ -1,0 +1,82 @@
+name: Publish Docker Images
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag for Docker images (e.g., latest, v1.0.0)'
+        required: true
+        default: 'latest'
+
+env:
+  SPARK_VERSION: 3.5.7
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata for Spark image
+        id: meta-spark
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository_owner }}/spark-aws
+          tags: |
+            type=raw,value=${{ github.event.inputs.tag || 'latest' }}
+            type=raw,value=spark-${{ env.SPARK_VERSION }}
+            type=raw,value=${{ env.SPARK_VERSION }}
+            type=sha,prefix=
+
+      - name: Build and push Spark image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile.spark
+          push: true
+          tags: ${{ steps.meta-spark.outputs.tags }}
+          labels: ${{ steps.meta-spark.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          platforms: linux/amd64,linux/arm64
+
+      - name: Extract metadata for Jupyter image
+        id: meta-jupyter
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository_owner }}/spark-jupyter
+          tags: |
+            type=raw,value=${{ github.event.inputs.tag || 'latest' }}
+            type=raw,value=spark-${{ env.SPARK_VERSION }}
+            type=raw,value=${{ env.SPARK_VERSION }}
+            type=sha,prefix=
+
+      - name: Build and push Jupyter image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile.jupyter
+          push: true
+          tags: ${{ steps.meta-jupyter.outputs.tags }}
+          labels: ${{ steps.meta-jupyter.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          platforms: linux/amd64,linux/arm64
