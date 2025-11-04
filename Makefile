@@ -1,10 +1,13 @@
-.PHONY: init up down restart logs scale clean test
+.PHONY: init up down restart logs scale clean test build
 
 WORKERS ?= 2
 
 init:
 	mkdir -p scripts data spark-logs warehouse notebooks
 	[ -f .env ] || cp .env.example .env
+
+build: init
+	docker compose build
 
 up: init
 	docker compose up -d --scale spark-worker=$(WORKERS)

@@ -15,8 +15,8 @@ Apache Spark docker setup with JupyterLab
 - Clone : 
 
 ```bash
-git clone https://github.com/kshitijrajsharma/spark-with-docker.git
-cd spark-with-docker
+git clone https://github.com/kshitijrajsharma/spark-with-s3-docker.git
+cd spark-with-s3-docker
 ```
 
 - Install and Run : 
