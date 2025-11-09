@@ -1,2 +1,6 @@
 .env
 .ipynb_checkpoints/
+spark-logs
+spark-warehouse/
+.DS_Store
+__pycache__/
