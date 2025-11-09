@@ -3,6 +3,7 @@ x-spark-volumes: &spark-volumes
   - ${DATA_PATH:-./data}:/opt/spark/work-dir/data
   - ${LOGS_PATH:-./spark-logs}:/opt/spark/spark-events
   - ${WAREHOUSE_PATH:-./warehouse}:/opt/spark/work-dir/warehouse
+  - ${NOTEBOOKS_PATH:-./notebooks}:/home/jovyan/notebooks
   - ~/.aws:/root/.aws
 
 services:
@@ -83,9 +84,7 @@ services:
       - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-east-1}
     depends_on:
       - spark-master
-    volumes:
-      - *spark-volumes
-      - ${NOTEBOOKS_PATH:-./notebooks}:/home/jovyan/notebooks
+    volumes: *spark-volumes
     ports:
       - '${JUPYTER_PORT:-8889}:8888'
 
