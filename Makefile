@@ -3,8 +3,9 @@
 WORKERS ?= 2
 
 init:
-	mkdir -p scripts data spark-logs warehouse notebooks
+	mkdir -p scripts data spark-logs spark-results warehouse notebooks
 	chmod -R 777 spark-logs
+	chmod -R 777 spark-results
 	[ -f .env ] || cp .env.example .env
 
 build: init
